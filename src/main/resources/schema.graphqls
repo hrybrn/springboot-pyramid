@@ -1,0 +1,44 @@
+type Query {
+  state(gameID: ID!): GameState
+  user(id: ID!): User
+  hand(userId: ID!, userSecret: ID!, gameId: ID!): Hand
+#  hand(gameID: String!, userSecret: String!): Hand
+}
+
+type Mutation {
+  registerUser(name: String!): CurrentUser
+  updateUser(id: ID!, name: String!, secret: ID!): CurrentUser
+  registerGame(name: String, hostId: ID!, hostSecret: ID!): Game
+  joinGame(id: ID!, userId: ID!, userSecret: ID!): Game
+  flipCard(gameId: ID!, hostId: ID!, hostSecret: ID!): Card
+}
+
+ type GameState {
+  flippedCards: [Card!]!
+ }
+
+type User {
+  id: ID!
+  name: String!
+}
+
+type CurrentUser {
+  id: ID!
+  name: String!
+  secret: ID!
+}
+
+type Game {
+  id: ID!
+  name: String
+  players: [User!]!
+}
+
+type Hand {
+  cards: [Card!]!
+}
+
+type Card {
+  suit: String!
+  rank: String!
+}
